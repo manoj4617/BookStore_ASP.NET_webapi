@@ -57,7 +57,7 @@ namespace BookStore.Repository
                 new Claim(ClaimTypes.Name, signinModel.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
-
+            Console.WriteLine($"Auth Claims : {authClaims}");
             var authSigninKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["JWT:Secret"]));
 
             var token = new JwtSecurityToken(
@@ -67,7 +67,7 @@ namespace BookStore.Repository
                     claims: authClaims,
                     signingCredentials: new SigningCredentials(authSigninKey,SecurityAlgorithms.HmacSha256Signature)
               ) ;
-
+            Console.WriteLine($"Token Generated : {token}");
             return new JwtSecurityTokenHandler().WriteToken(token);
            
         }
